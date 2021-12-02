@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
 const port = 8000;
-
+const db = require('./config/mongoose');
+const Contact = require('./models/contact');
 const app = express();
 
 app.set('view engine','ejs');
@@ -9,6 +10,7 @@ app.set('views',path.join(__dirname,'views'));
 app.use(express.urlencoded());//parsing form data to create contatc//app.use middleware
 
 app.use(express.static('assets'));//express.static inbuilt
+
 
 
 // //middlleware 1
@@ -43,10 +45,20 @@ app.get('/',function(req,res){
     // console.log(__dirname);
 
     // 
-    return res.render('home',{
-        title:"my contacts List",
-        contact_list:contactList
+    Contact.find({},function(err,contacts){
+        if(err){
+            console.log('error in fetching contacts from db');
+            return;
+        }
+        
+        return res.render('home',{
+            title:"my contacts List",
+            contact_list:contacts
+        });
     });
+
+
+    
 });
 app.get('/try',function(req,res){
     // console.log(__dirname);
@@ -64,27 +76,40 @@ app.post('/create-contact',function(req,res){//here mwe need middle-ware
 //          name:req.body.name,
 //          phone:req.body.phone
 // });
-contactList.push(req.body);
+//contactList.push(req.body);
+
+    Contact.create({
+        name:req.body.name,
+        phone:req.body.phone
+    }, function(err,newContact){
+        if(err){console.log('error in creatig contact');
+        return; }
+
+        console.log('****',newContact);
+       return  res.redirect('back');
+    } );
    
 //  return res.redirect('/');
-return res.redirect('back');
+
 
 
 
 });//form filled ->submit->action route->redirected
 
 app.get('/delete-contact',function(req,res){
+// get id from qery in url 
+let id =req.query.id;
 
-let phone =req.query.phone;
+// find the contact in database using id and delete 
+   Contact.findByIdAndDelete(id, function(err){
+if(err){
+     console.log('error in deleteing an object from database');
+     return;
+      }
+      return res.redirect('back');
 
-let contactIndex = contactList.findIndex(contact => contact.phone == phone);
-
- if(contactIndex!= -1){
-     contactList.splice(contactIndex,1);
-
- }
- return res.redirect('back');
-
+   });
+  
 });
 
 

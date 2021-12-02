@@ -1,0 +1,1 @@
+console.log('myscript from assets');

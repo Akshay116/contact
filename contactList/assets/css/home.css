@@ -1,0 +1,57 @@
+body{
+margin: 0;
+font-family: sans-serif;
+}
+#page-heading{
+text-align: center;
+margin-top: 25px;
+color:blue;
+}
+.contact-lis{
+       
+    color: gray;
+    
+}
+ul {
+    list-style-type: none;
+    margin: 0;6
+    padding: 0;
+  }
+  p{
+      display: inline;
+     
+     
+  }
+  .details{
+      display: flex;
+      justify-content: space-between;
+      
+  }
+  
+  .litem{
+      display: flex;
+      
+      justify-content: space-evenly;
+  }
+    
+
+    .form-input{
+      display: flex;
+      justify-content: space-evenly;
+    }
+    .contact-lis{
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: row;
+    }
+    .list-items{
+        
+    }
+    .li-item{
+        width: 2px;
+    }
+    .input-style{
+        font-size: 10px;
+        border-radius: 50%;
+        border: 5px grey;
+    }

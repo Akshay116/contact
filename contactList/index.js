@@ -29,7 +29,7 @@ app.use(express.static('assets'));//express.static inbuilt
 var contactList = [
     {
        name: "Akshay",
-       phone:"1234"
+        phone:"1234"
     },
     {
         name:"darshan",
